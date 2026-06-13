@@ -44,7 +44,7 @@ body {
 
 /* Card selected state */
 .card-selectable {
-  @apply bg-card border-2 border-border rounded-2xl cursor-pointer transition-all duration-250;
+  @apply bg-card border-2 border-border rounded-2xl cursor-pointer transition-all duration-300;
 }
 .card-selectable.selected {
   border-color: var(--primary);
@@ -53,7 +53,7 @@ body {
 
 /* Input base */
 .input-base {
-  @apply w-full bg-inputbg border-2 border-border rounded-xl px-4 py-3.5 text-[#F8F4EE] font-sans text-[15px] outline-none transition-colors duration-250;
+  @apply w-full bg-inputbg border-2 border-border rounded-xl px-4 py-3.5 text-[#F8F4EE] font-sans text-[15px] outline-none transition-colors duration-300;
   -webkit-appearance: none;
 }
 .input-base::placeholder { color: #8b8fa8; }
