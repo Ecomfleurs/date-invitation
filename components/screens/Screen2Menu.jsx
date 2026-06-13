@@ -20,14 +20,19 @@ export default function Screen2Menu({ config, onSelect }) {
         {config.menus.map((menu, i) => (
           <motion.div
             key={i}
-            onClick={() => {
-              setTimeout(() => onSelect(menu), 300)
-            }}
+            onClick={() => setTimeout(() => onSelect(menu.label), 300)}
             whileTap={{ scale: 0.95 }}
-            className="relative bg-card border-2 border-border rounded-2xl p-4 text-center cursor-pointer active:border-primary active:bg-glow transition-all duration-250"
+            className="relative bg-card border-2 border-border rounded-2xl overflow-hidden cursor-pointer active:border-primary"
           >
-            <span className="text-3xl block mb-2">{MENU_EMOJIS[i] || '🍽️'}</span>
-            <span className="text-[12px] font-semibold text-muted leading-tight">{menu}</span>
+            <div className="w-full aspect-square flex items-center justify-center bg-inputbg">
+              {menu.image
+                ? <img src={menu.image} alt={menu.label} className="w-full h-full object-cover" />
+                : <span className="text-4xl">{MENU_EMOJIS[i] || '🍽️'}</span>
+              }
+            </div>
+            <div className="px-3 py-2.5">
+              <span className="text-[12px] font-semibold text-muted leading-tight line-clamp-2">{menu.label}</span>
+            </div>
           </motion.div>
         ))}
       </div>

@@ -13,22 +13,32 @@ export default function CreatePage() {
   const [inviteName, setInviteName] = useState('')
   const [invitePhone, setInvitePhone] = useState('')
   const [orgPhone, setOrgPhone] = useState('')
-  const [selectedMenus, setSelectedMenus] = useState(DEFAULT_MENUS.map(m => m.label))
-  const [customMenus, setCustomMenus] = useState([])
+  const [menuItems, setMenuItems] = useState(
+    DEFAULT_MENUS.map(m => ({ id: m.id, label: m.label, emoji: m.emoji, image: null, selected: true }))
+  )
   const [creneaux, setCreneaux] = useState([{ id: 1, date: '', time: '' }])
   const [transport, setTransport] = useState('Zemjan\nKekeno')
   const [generatedUrl, setGeneratedUrl] = useState(null)
   const [copied, setCopied] = useState(false)
 
-  const allMenus = [...selectedMenus, ...customMenus]
+  const selectedMenuItems = menuItems.filter(m => m.selected)
   const filledCreneaux = creneaux.filter(c => c.date && c.time)
+  const isValid = inviteName.trim() && orgPhone.trim() && selectedMenuItems.length > 0 && filledCreneaux.length > 0
 
-  const isValid = inviteName.trim() && orgPhone.trim() && allMenus.length > 0 && filledCreneaux.length > 0
+  const toggleMenu = (id) => {
+    setMenuItems(prev => prev.map(m => m.id === id ? { ...m, selected: !m.selected } : m))
+  }
 
-  const toggleMenu = (label) => {
-    setSelectedMenus(prev =>
-      prev.includes(label) ? prev.filter(m => m !== label) : [...prev, label]
-    )
+  const addCustomMenu = ({ label, image }) => {
+    setMenuItems(prev => [...prev, { id: `c-${Date.now()}`, label, emoji: '🍽️', image, selected: true }])
+  }
+
+  const removeMenu = (id) => {
+    setMenuItems(prev => prev.filter(m => m.id !== id))
+  }
+
+  const updateMenuImage = (id, image) => {
+    setMenuItems(prev => prev.map(m => m.id === id ? { ...m, image } : m))
   }
 
   const addCreneau = () => {
@@ -49,7 +59,7 @@ export default function CreatePage() {
       mode,
       name: inviteName.trim(),
       phone: '229' + orgPhone.trim().replace(/\s/g, ''),
-      menus: allMenus,
+      menus: selectedMenuItems.map(m => ({ label: m.label, image: m.image })),
       creneaux: filledCreneaux.map(c => ({ date: c.date, time: c.time })),
       transport,
     }
@@ -88,12 +98,10 @@ export default function CreatePage() {
         </h1>
       </div>
 
-      {/* Mode */}
       <Section label="Type d'invitation">
         <ModeToggle mode={mode} onChange={setMode} />
       </Section>
 
-      {/* Infos invité */}
       <Section label="Qui invites-tu ?">
         <input
           className="input-base mb-2.5"
@@ -116,7 +124,6 @@ export default function CreatePage() {
         </div>
       </Section>
 
-      {/* Ton numéro */}
       <Section label="Ton numéro WhatsApp (tu recevras les réponses ici)">
         <div className="flex gap-2.5">
           <div className="bg-inputbg border-2 border-border rounded-xl px-3.5 py-3.5 text-muted text-sm font-semibold whitespace-nowrap flex items-center gap-1.5">
@@ -132,18 +139,16 @@ export default function CreatePage() {
         </div>
       </Section>
 
-      {/* Menus */}
-      <Section label="Menus proposés">
+      <Section label={`Menus proposés (${menuItems.length}/10)`}>
         <MenuGrid
-          selected={selectedMenus}
+          items={menuItems}
           onToggle={toggleMenu}
-          customMenus={customMenus}
-          onAddCustom={m => setCustomMenus(prev => [...prev, m])}
-          onRemoveCustom={i => setCustomMenus(prev => prev.filter((_, idx) => idx !== i))}
+          onAddCustom={addCustomMenu}
+          onRemove={removeMenu}
+          onImageUpdate={updateMenuImage}
         />
       </Section>
 
-      {/* Créneaux */}
       <Section label="Tes créneaux proposés (3 max)">
         <CreneauxPicker
           creneaux={creneaux}
@@ -153,16 +158,14 @@ export default function CreatePage() {
         />
       </Section>
 
-      {/* Transport */}
       <Section label="Transport suggéré">
         <TransportPicker selected={transport} onSelect={setTransport} />
       </Section>
 
-      {/* Preview + Generate */}
       <div className="px-5 pt-7">
         <PreviewCard
           name={inviteName}
-          menus={allMenus}
+          menus={selectedMenuItems.map(m => m.label)}
           creneaux={creneaux}
           transport={transport}
         />
@@ -177,7 +180,6 @@ export default function CreatePage() {
           Générer le lien d'invitation 🔗
         </button>
 
-        {/* Result box */}
         {generatedUrl && (
           <div id="result-box" className="bg-card border-2 border-primary rounded-2xl p-5 mt-5 glow-border theme-transition">
             <p className="font-display text-[15px] text-primary mb-3 theme-transition">
