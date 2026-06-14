@@ -1,5 +1,6 @@
 'use client'
 import { useState, useRef } from 'react'
+import Image from 'next/image'
 import { DEFAULT_MENUS } from '@/lib/constants'
 
 async function uploadToImgBB(file) {
@@ -61,11 +62,11 @@ export default function MenuGrid({ items, onToggle, onAddCustom, onRemove, onIma
                 {/* Circle */}
                 <div
                   onClick={() => onToggle(item.id)}
-                  className={`w-full h-full rounded-full border-[3px] overflow-hidden flex items-center justify-center cursor-pointer transition-all duration-300
+                  className={`relative w-full h-full rounded-full border-[3px] overflow-hidden flex items-center justify-center cursor-pointer transition-all duration-300
                     ${isSel ? 'border-primary bg-glow' : 'border-border bg-card'}`}
                 >
                   {item.image
-                    ? <img src={item.image} alt={item.label} className="w-full h-full object-cover" />
+                    ? <Image src={item.image} alt={item.label} fill className="object-cover" sizes="80px" />
                     : <span className="text-3xl">{defaultDef?.emoji || '🍽️'}</span>
                   }
                 </div>

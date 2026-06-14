@@ -64,9 +64,9 @@ export default function CreatePage() {
     }
     const url = buildInviteUrl(config)
     setGeneratedUrl(url)
-    setTimeout(() => {
-      document.getElementById('result-box')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-    }, 100)
+    requestAnimationFrame(() => {
+      document.getElementById('result-box')?.scrollIntoView({ behavior: 'auto', block: 'nearest' })
+    })
   }
 
   const copyLink = () => {

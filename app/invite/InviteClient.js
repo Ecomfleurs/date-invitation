@@ -1,12 +1,14 @@
 'use client'
 import { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic'
 import { useSearchParams } from 'next/navigation'
 import { decodeConfig } from '@/lib/encode'
 import Screen1Accroche from '@/components/screens/Screen1Accroche'
-import Screen2Menu from '@/components/screens/Screen2Menu'
-import Screen3Creneau from '@/components/screens/Screen3Creneau'
-import Screen4Transport from '@/components/screens/Screen4Transport'
-import Screen5Recap from '@/components/screens/Screen5Recap'
+
+const Screen2Menu = dynamic(() => import('@/components/screens/Screen2Menu'))
+const Screen3Creneau = dynamic(() => import('@/components/screens/Screen3Creneau'))
+const Screen4Transport = dynamic(() => import('@/components/screens/Screen4Transport'))
+const Screen5Recap = dynamic(() => import('@/components/screens/Screen5Recap'))
 
 export default function InvitePage() {
   const searchParams = useSearchParams()

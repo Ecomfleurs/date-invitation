@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { MENU_EMOJIS } from '@/lib/constants'
 
@@ -19,14 +20,14 @@ export default function Screen2Menu({ config, onSelect }) {
       <div className="grid grid-cols-2 gap-2.5 w-full max-w-[360px]">
         {config.menus.map((menu, i) => (
           <motion.div
-            key={i}
+            key={menu.label}
             onClick={() => setTimeout(() => onSelect(menu.label), 300)}
             whileTap={{ scale: 0.95 }}
             className="relative bg-card border-2 border-border rounded-2xl overflow-hidden cursor-pointer active:border-primary"
           >
-            <div className="w-full aspect-square flex items-center justify-center bg-inputbg">
+            <div className="w-full aspect-square relative flex items-center justify-center bg-inputbg">
               {menu.image
-                ? <img src={menu.image} alt={menu.label} className="w-full h-full object-cover" />
+                ? <Image src={menu.image} alt={menu.label} fill className="object-cover" sizes="180px" />
                 : <span className="text-4xl">{MENU_EMOJIS[i] || '🍽️'}</span>
               }
             </div>

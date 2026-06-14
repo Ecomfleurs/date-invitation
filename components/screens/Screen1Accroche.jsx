@@ -1,5 +1,5 @@
 'use client'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { motion } from 'framer-motion'
 
 const NO_TEXTS = [
@@ -20,9 +20,13 @@ export default function Screen1Accroche({ config, onYes }) {
   const [noPos, setNoPos] = useState({ x: null, y: null })
   const [noClicked, setNoClicked] = useState(false)
   const [fleeCount, setFleeCount] = useState(0)
+  const lastFlee = useRef(0)
 
   const flee = useCallback((e) => {
     e.preventDefault()
+    const now = Date.now()
+    if (now - lastFlee.current < 150) return
+    lastFlee.current = now
     const vw = window.innerWidth
     const vh = window.innerHeight
     const bw = 220, bh = 60
@@ -94,7 +98,6 @@ export default function Screen1Accroche({ config, onYes }) {
         </button>
       </motion.div>
 
-      {/* Fleeing No button — visuellement plus marquant */}
       <button
         onTouchStart={flee}
         onMouseEnter={flee}
