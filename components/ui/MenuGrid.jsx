@@ -48,7 +48,7 @@ export default function MenuGrid({ items, onToggle, onAddCustom, onRemove, onIma
 
   return (
     <div>
-      <div className="grid grid-cols-2 gap-2.5 mb-3">
+      <div className="grid grid-cols-3 gap-x-2 gap-y-4 mb-4">
         {items.map((item) => {
           const isSel = item.selected
           const isUploading = uploading === item.id
@@ -56,78 +56,81 @@ export default function MenuGrid({ items, onToggle, onAddCustom, onRemove, onIma
           const isCustom = !defaultDef
 
           return (
-            <div
-              key={item.id}
-              className={`relative bg-card border-2 rounded-2xl p-3.5 text-center transition-colors duration-300
-                ${isSel ? 'border-primary bg-glow' : 'border-border'}`}
-            >
-              {/* Remove button for custom menus */}
-              {isCustom && (
-                <button
-                  onClick={() => onRemove(item.id)}
-                  className="absolute top-2 left-2 w-5 h-5 flex items-center justify-center text-muted text-base leading-none"
+            <div key={item.id} className="flex flex-col items-center gap-1.5">
+              <div className="relative">
+                {/* Circle */}
+                <div
+                  onClick={() => onToggle(item.id)}
+                  className={`w-20 h-20 rounded-full border-[3px] overflow-hidden flex items-center justify-center cursor-pointer transition-all duration-300
+                    ${isSel ? 'border-primary bg-glow' : 'border-border bg-card'}`}
                 >
-                  ×
-                </button>
-              )}
+                  {item.image
+                    ? <img src={item.image} alt={item.label} className="w-full h-full object-cover" />
+                    : <span className="text-3xl">{defaultDef?.emoji || '🍽️'}</span>
+                  }
+                </div>
 
-              {/* Selected checkmark */}
-              {isSel && (
-                <span className="absolute top-2 right-2 w-[18px] h-[18px] rounded-full bg-primary flex items-center justify-center text-[9px] font-black text-bg">
-                  ✓
-                </span>
-              )}
-
-              {/* Image or emoji — click to toggle selection */}
-              <div onClick={() => onToggle(item.id)} className="cursor-pointer">
-                {item.image ? (
-                  <img
-                    src={item.image}
-                    alt={item.label}
-                    className="w-full h-20 object-cover rounded-xl mb-1.5"
-                  />
-                ) : (
-                  <span className="text-2xl block mb-1.5">{defaultDef?.emoji || '🍽️'}</span>
+                {/* Selected checkmark */}
+                {isSel && (
+                  <div className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-primary rounded-full flex items-center justify-center text-[9px] font-black text-bg">
+                    ✓
+                  </div>
                 )}
-                <span className={`text-[11px] font-semibold leading-tight block ${isSel ? 'text-[#F8F4EE]' : 'text-muted'}`}>
-                  {item.label}
-                </span>
+
+                {/* Camera button */}
+                <button
+                  onClick={() => fileRefs.current[item.id]?.click()}
+                  className="absolute -bottom-1 -right-1 w-6 h-6 bg-card border-2 border-border rounded-full flex items-center justify-center text-xs"
+                >
+                  📷
+                </button>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  ref={el => { fileRefs.current[item.id] = el }}
+                  onChange={e => handleFile(item.id, e.target.files[0])}
+                />
+
+                {/* Remove button for custom menus */}
+                {isCustom && (
+                  <button
+                    onClick={() => onRemove(item.id)}
+                    className="absolute -top-0.5 -left-0.5 w-5 h-5 bg-card border-2 border-border rounded-full flex items-center justify-center text-muted text-xs leading-none"
+                  >
+                    ×
+                  </button>
+                )}
+
+                {/* Upload spinner */}
+                {isUploading && (
+                  <div className="absolute inset-0 rounded-full bg-bg/70 flex items-center justify-center">
+                    <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                  </div>
+                )}
               </div>
 
-              {/* Upload button */}
-              <button
-                onClick={() => fileRefs.current[item.id]?.click()}
-                className="mt-2 text-muted text-[10px] font-medium hover:text-primary transition-colors"
-              >
-                {item.image ? '🔄 Changer' : '📷 Ajouter photo'}
-              </button>
-              <input
-                type="file"
-                accept="image/*"
-                className="hidden"
-                ref={el => { fileRefs.current[item.id] = el }}
-                onChange={e => handleFile(item.id, e.target.files[0])}
-              />
-
-              {/* Upload spinner overlay */}
-              {isUploading && (
-                <div className="absolute inset-0 bg-bg/70 flex items-center justify-center rounded-2xl">
-                  <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-                </div>
-              )}
+              {/* Label */}
+              <span className={`text-[10px] font-semibold text-center leading-tight w-full line-clamp-2 ${isSel ? 'text-[#F8F4EE]' : 'text-muted'}`}>
+                {item.label}
+              </span>
             </div>
           )
         })}
-      </div>
 
-      {canAdd && !showAdd && (
-        <button
-          onClick={() => setShowAdd(true)}
-          className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl border-2 border-dashed border-border text-muted text-[13px] font-semibold"
-        >
-          + Ajouter un menu ({items.length}/10)
-        </button>
-      )}
+        {/* Add button as circle */}
+        {canAdd && !showAdd && (
+          <div className="flex flex-col items-center gap-1.5">
+            <button
+              onClick={() => setShowAdd(true)}
+              className="w-20 h-20 rounded-full border-[3px] border-dashed border-border bg-card flex items-center justify-center text-muted text-2xl"
+            >
+              +
+            </button>
+            <span className="text-[10px] text-muted">{items.length}/10</span>
+          </div>
+        )}
+      </div>
 
       {showAdd && (
         <div className="flex gap-2.5">
@@ -140,18 +143,8 @@ export default function MenuGrid({ items, onToggle, onAddCustom, onRemove, onIma
             onKeyDown={e => e.key === 'Enter' && handleAdd()}
             autoFocus
           />
-          <button
-            onClick={handleAdd}
-            className="bg-glow border-2 border-primary rounded-xl px-4 text-primary text-2xl"
-          >
-            +
-          </button>
-          <button
-            onClick={() => { setShowAdd(false); setNewLabel('') }}
-            className="text-muted text-xl px-2"
-          >
-            ×
-          </button>
+          <button onClick={handleAdd} className="bg-glow border-2 border-primary rounded-xl px-4 text-primary text-2xl">+</button>
+          <button onClick={() => { setShowAdd(false); setNewLabel('') }} className="text-muted text-xl px-2">×</button>
         </div>
       )}
     </div>
