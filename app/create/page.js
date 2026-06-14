@@ -95,15 +95,6 @@ export default function CreatePage() {
             {mode === 'romantic' ? 'invitation romantique' : 'sortie entre amis'}
           </span>
         </h1>
-        <button
-          onClick={() => {
-            const msg = `💌 Invite quelqu'un de spécial à ta façon —\nmenu, date, sortie amis ou rendez-vous romantique... tout en un lien 🍽️💕\n\n👉 ${window.location.origin}/create`
-            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank')
-          }}
-          className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-wa text-white text-[12px] font-semibold"
-        >
-          Partager l'app 💬
-        </button>
       </div>
 
       <Section label="Type d'invitation">
