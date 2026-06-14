@@ -92,15 +92,13 @@ export default function MenuGrid({ items, onToggle, onAddCustom, onRemove, onIma
                   onChange={e => handleFile(item.id, e.target.files[0])}
                 />
 
-                {/* Remove button for custom menus */}
-                {isCustom && (
-                  <button
-                    onClick={() => onRemove(item.id)}
-                    className="absolute -top-0.5 -left-0.5 w-5 h-5 bg-card border-2 border-border rounded-full flex items-center justify-center text-muted text-xs leading-none"
-                  >
-                    ×
-                  </button>
-                )}
+                {/* Remove button for all menus */}
+                <button
+                  onClick={() => onRemove(item.id)}
+                  className="absolute -top-0.5 -left-0.5 w-5 h-5 bg-card border-2 border-border rounded-full flex items-center justify-center text-muted text-xs leading-none"
+                >
+                  ×
+                </button>
 
                 {/* Upload spinner */}
                 {isUploading && (
