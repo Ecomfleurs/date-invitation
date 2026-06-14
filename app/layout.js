@@ -1,6 +1,7 @@
 import './globals.css'
 
 export const metadata = {
+  metadataBase: new URL('https://date-invitation-blond.vercel.app'),
   title: 'Date Invitation',
   description: 'Crée et envoie des invitations interactives par WhatsApp.',
 }
