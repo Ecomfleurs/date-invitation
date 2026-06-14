@@ -11,7 +11,6 @@ import { buildInviteUrl } from '@/lib/encode'
 export default function CreatePage() {
   const [mode, setMode] = useState('romantic')
   const [inviteName, setInviteName] = useState('')
-  const [invitePhone, setInvitePhone] = useState('')
   const [orgPhone, setOrgPhone] = useState('')
   const [menuItems, setMenuItems] = useState(
     DEFAULT_MENUS.map(m => ({ id: m.id, label: m.label, emoji: m.emoji, image: null, selected: true }))
@@ -104,24 +103,12 @@ export default function CreatePage() {
 
       <Section label="Qui invites-tu ?">
         <input
-          className="input-base mb-2.5"
+          className="input-base"
           type="text"
           placeholder="Prénom de l'invité(e)"
           value={inviteName}
           onChange={e => setInviteName(e.target.value)}
         />
-        <div className="flex gap-2.5">
-          <div className="bg-inputbg border-2 border-border rounded-xl px-3.5 py-3.5 text-muted text-sm font-semibold whitespace-nowrap flex items-center gap-1.5">
-            🇧🇯 +229
-          </div>
-          <input
-            className="input-base flex-1"
-            type="tel"
-            placeholder="6X XX XX XX XX"
-            value={invitePhone}
-            onChange={e => setInvitePhone(e.target.value)}
-          />
-        </div>
       </Section>
 
       <Section label="Ton numéro WhatsApp (tu recevras les réponses ici)">
