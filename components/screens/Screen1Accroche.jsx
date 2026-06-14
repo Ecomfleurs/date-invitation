@@ -2,26 +2,45 @@
 import { useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
 
+const NO_TEXTS = [
+  'Non 😢',
+  'Vraiment non ? 😏',
+  "T'es sûr(e) ? 🤔",
+  'Attends... non ! 😅',
+  'Pas question ! 😤',
+  'Non non non 🙅',
+  'Tu rigoles là ? 😂',
+  'Jamais de la vie ! 😈',
+  'Erreur 404 😵',
+  'Stop me if you can 🏃',
+]
+
 export default function Screen1Accroche({ config, onYes }) {
   const isRomantic = config.mode === 'romantic'
   const [noPos, setNoPos] = useState({ x: null, y: null })
   const [noClicked, setNoClicked] = useState(false)
+  const [fleeCount, setFleeCount] = useState(0)
 
   const flee = useCallback((e) => {
     e.preventDefault()
     const vw = window.innerWidth
     const vh = window.innerHeight
-    const bw = 140, bh = 52
+    const bw = 220, bh = 60
     setNoPos({
       x: Math.random() * (vw - bw),
       y: Math.random() * (vh - bh),
     })
+    setFleeCount(prev => prev + 1)
   }, [])
 
   const handleNoClick = () => {
     setNoClicked(true)
     setTimeout(() => setNoClicked(false), 2000)
   }
+
+  const noLabel = noClicked
+    ? '😉 Erreur réseau !'
+    : NO_TEXTS[fleeCount % NO_TEXTS.length]
 
   return (
     <motion.div
@@ -75,19 +94,24 @@ export default function Screen1Accroche({ config, onYes }) {
         </button>
       </motion.div>
 
-      {/* Fleeing No button */}
+      {/* Fleeing No button — visuellement plus marquant */}
       <button
         onTouchStart={flee}
         onMouseEnter={flee}
         onClick={handleNoClick}
-        className="fixed px-8 py-3.5 rounded-full bg-card border-2 border-border text-muted text-sm font-semibold transition-all duration-150"
-        style={
-          noPos.x !== null
+        className="fixed font-display font-bold text-[17px] px-8 py-4 rounded-2xl transition-all duration-150"
+        style={{
+          background: 'linear-gradient(135deg, #ff6b6b, #ff4757)',
+          color: '#fff',
+          boxShadow: '0 8px 32px rgba(255,71,87,0.5)',
+          border: '2px solid rgba(255,255,255,0.15)',
+          ...(noPos.x !== null
             ? { left: noPos.x, top: noPos.y }
             : { bottom: '10%', left: '50%', transform: 'translateX(-50%)' }
-        }
+          )
+        }}
       >
-        {noClicked ? '😉 Erreur réseau !' : 'Non 😢'}
+        {noLabel}
       </button>
     </motion.div>
   )
