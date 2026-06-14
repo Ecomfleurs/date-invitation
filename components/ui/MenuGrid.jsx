@@ -48,7 +48,7 @@ export default function MenuGrid({ items, onToggle, onAddCustom, onRemove, onIma
 
   return (
     <div>
-      <div className="grid grid-cols-3 gap-x-2 gap-y-4 mb-4">
+      <div className="grid grid-cols-5 gap-x-3 gap-y-4 mb-4">
         {items.map((item) => {
           const isSel = item.selected
           const isUploading = uploading === item.id
@@ -57,11 +57,11 @@ export default function MenuGrid({ items, onToggle, onAddCustom, onRemove, onIma
 
           return (
             <div key={item.id} className="flex flex-col items-center gap-1.5">
-              <div className="relative">
+              <div className="relative w-full aspect-square">
                 {/* Circle */}
                 <div
                   onClick={() => onToggle(item.id)}
-                  className={`w-20 h-20 rounded-full border-[3px] overflow-hidden flex items-center justify-center cursor-pointer transition-all duration-300
+                  className={`w-full h-full rounded-full border-[3px] overflow-hidden flex items-center justify-center cursor-pointer transition-all duration-300
                     ${isSel ? 'border-primary bg-glow' : 'border-border bg-card'}`}
                 >
                   {item.image
@@ -123,7 +123,7 @@ export default function MenuGrid({ items, onToggle, onAddCustom, onRemove, onIma
           <div className="flex flex-col items-center gap-1.5">
             <button
               onClick={() => setShowAdd(true)}
-              className="w-20 h-20 rounded-full border-[3px] border-dashed border-border bg-card flex items-center justify-center text-muted text-2xl"
+              className="w-full aspect-square rounded-full border-[3px] border-dashed border-border bg-card flex items-center justify-center text-muted text-2xl"
             >
               +
             </button>
