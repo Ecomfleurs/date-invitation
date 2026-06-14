@@ -77,7 +77,6 @@ export default function Image() {
             borderRadius: 50,
             fontSize: 20,
             fontWeight: 700,
-            width: 'fit-content',
           }}>
             Créer mon invitation →
           </div>

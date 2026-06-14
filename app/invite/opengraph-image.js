@@ -73,13 +73,11 @@ export default function Image() {
           Clique pour découvrir et répondre
         </div>
 
-        <div style={{
-          display: 'flex',
-          gap: 40,
-          zIndex: 1,
-        }}>
+        <div style={{ display: 'flex', gap: 24, zIndex: 1 }}>
           {['🍽️ Menu', '📅 Date', '💬 WhatsApp'].map((item) => (
             <div key={item} style={{
+              display: 'flex',
+              alignItems: 'center',
               background: '#161828',
               border: '1px solid #2a2d45',
               borderRadius: 50,
