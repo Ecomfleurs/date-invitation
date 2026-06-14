@@ -1,13 +1,8 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'Planifie notre date 💌',
-  description: 'Tu as reçu une invitation très spéciale...',
-  openGraph: {
-    title: '💌 Tu as reçu une invitation très spéciale...',
-    description: 'Clique pour l\'ouvrir et répondre',
-    type: 'website',
-  },
+  title: 'Date Invitation',
+  description: 'Crée et envoie des invitations interactives par WhatsApp.',
 }
 
 export default function RootLayout({ children }) {
