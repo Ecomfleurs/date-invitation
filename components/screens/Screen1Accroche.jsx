@@ -104,9 +104,9 @@ export default function Screen1Accroche({ config, onYes }) {
         onClick={handleNoClick}
         className="fixed font-display font-bold text-[17px] px-8 py-4 rounded-2xl transition-all duration-150"
         style={{
-          background: 'linear-gradient(135deg, #ff6b6b, #ff4757)',
+          background: 'linear-gradient(135deg, var(--glow-strong), var(--primary))',
           color: '#fff',
-          boxShadow: '0 8px 32px rgba(255,71,87,0.5)',
+          boxShadow: '0 8px 32px var(--glow-strong)',
           border: '2px solid rgba(255,255,255,0.15)',
           ...(noPos.x !== null
             ? { left: noPos.x, top: noPos.y }
