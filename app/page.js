@@ -1,5 +1,4 @@
-import { redirect } from 'next/navigation'
-
+// Redirect handled at edge level in next.config.js (permanent: true → HTTP 308)
 export default function Home() {
-  redirect('/create')
+  return null
 }
