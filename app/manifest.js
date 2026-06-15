@@ -13,15 +13,21 @@ export default function manifest() {
     lang: 'fr',
     icons: [
       {
-        src: '/icon',
-        sizes: '512x512',
-        type: 'image/png',
-        purpose: 'any maskable',
-      },
-      {
         src: '/apple-icon',
         sizes: '180x180',
         type: 'image/png',
+      },
+      {
+        src: '/icon',
+        sizes: '192x192',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/icon',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable',
       },
     ],
   }

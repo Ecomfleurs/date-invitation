@@ -81,6 +81,7 @@ export default function RootLayout({ children }) {
     <html lang="fr" className={`${playfair.variable} ${inter.variable}`}>
       <head>
         <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content="DateInvite" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <JsonLd />
       </head>
