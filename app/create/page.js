@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import ModeToggle from '@/components/ui/ModeToggle'
+import ThemePicker from '@/components/ui/ThemePicker'
 import MenuGrid from '@/components/ui/MenuGrid'
 import CreneauxPicker from '@/components/ui/CreneauxPicker'
 import TransportPicker from '@/components/ui/TransportPicker'
@@ -17,6 +18,7 @@ export default function CreatePage() {
   )
   const [creneaux, setCreneaux] = useState([{ id: 1, date: '', time: '' }])
   const [transport, setTransport] = useState('Zemjan\nKekeno')
+  const [theme, setTheme] = useState('valentine')
   const [generatedUrl, setGeneratedUrl] = useState(null)
   const [copied, setCopied] = useState(false)
 
@@ -61,6 +63,7 @@ export default function CreatePage() {
       menus: selectedMenuItems.map(m => ({ label: m.label, image: m.image })),
       creneaux: filledCreneaux.map(c => ({ date: c.date, time: c.time })),
       transport,
+      theme: mode === 'romantic' ? theme : undefined,
     }
     const url = buildInviteUrl(config)
     setGeneratedUrl(url)
@@ -100,6 +103,12 @@ export default function CreatePage() {
       <Section label="Type d'invitation">
         <ModeToggle mode={mode} onChange={setMode} />
       </Section>
+
+      {mode === 'romantic' && (
+        <Section label="Ambiance 🎨">
+          <ThemePicker selected={theme} onChange={setTheme} />
+        </Section>
+      )}
 
       <Section label="Qui invites-tu ?">
         <input

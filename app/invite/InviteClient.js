@@ -25,6 +25,15 @@ export default function InvitePage() {
     setConfig(decoded)
   }, [searchParams])
 
+  // Applique le thème DaisyUI sur <html> pour changer l'ambiance accent color
+  useEffect(() => {
+    if (!config) return
+    if (config.mode === 'romantic' && config.theme) {
+      document.documentElement.setAttribute('data-theme', config.theme)
+      return () => document.documentElement.removeAttribute('data-theme')
+    }
+  }, [config])
+
   if (error) {
     return (
       <div className="fixed inset-0 flex flex-col items-center justify-center px-5 bg-bg text-center">

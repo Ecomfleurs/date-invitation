@@ -27,5 +27,11 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('daisyui')],
+  daisyui: {
+    themes: ['valentine', 'luxury', 'night', 'fantasy', 'dracula', 'cupcake'],
+    base: false,   // pas de reset DaisyUI sur html/body (on garde notre dark design)
+    styled: false, // pas de styles composants (on n'utilise pas .btn, .card etc.)
+    logs: false,
+  },
 }

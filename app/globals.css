@@ -59,6 +59,15 @@ body {
 .input-base::placeholder { color: #8b8fa8; }
 .input-base:focus { border-color: var(--primary); }
 
+/* ── Thèmes DaisyUI → variables CSS custom ───────────────────────── */
+/* L'accent change, le fond sombre reste (body #0D0F1A non touché). */
+[data-theme="valentine"] { --primary: #e96d7b; --glow: rgba(233,109,123,0.15); --glow-strong: rgba(233,109,123,0.35); }
+[data-theme="luxury"]    { --primary: #d4af37; --glow: rgba(212,175,55,0.15);  --glow-strong: rgba(212,175,55,0.35);  }
+[data-theme="night"]     { --primary: #5b8af5; --glow: rgba(91,138,245,0.15);  --glow-strong: rgba(91,138,245,0.35);  }
+[data-theme="fantasy"]   { --primary: #9d4edd; --glow: rgba(157,78,221,0.15);  --glow-strong: rgba(157,78,221,0.35);  }
+[data-theme="dracula"]   { --primary: #bd93f9; --glow: rgba(189,147,249,0.15); --glow-strong: rgba(189,147,249,0.35); }
+[data-theme="cupcake"]   { --primary: #ef9fbc; --glow: rgba(239,159,188,0.15); --glow-strong: rgba(239,159,188,0.35); }
+
 /* Date/time inputs */
 input[type="date"],
 input[type="time"] {
