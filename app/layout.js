@@ -1,5 +1,6 @@
 import './globals.css'
 import JsonLd from '@/components/JsonLd'
+import ServiceWorker from '@/components/ServiceWorker'
 import { Playfair_Display, Inter } from 'next/font/google'
 
 const playfair = Playfair_Display({
@@ -22,6 +23,7 @@ export const viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
+  themeColor: '#0D0F1A',
 }
 
 export const metadata = {
@@ -78,13 +80,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr" className={`${playfair.variable} ${inter.variable}`}>
       <head>
-        <meta name="theme-color" content="#0D0F1A" />
-        <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <JsonLd />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <ServiceWorker />
+      </body>
     </html>
   )
 }
