@@ -18,6 +18,12 @@ const inter = Inter({
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://date-invitation-blond.vercel.app'
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+}
+
 export const metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
@@ -72,8 +78,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr" className={`${playfair.variable} ${inter.variable}`}>
       <head>
-        {/* user-scalable removed for WCAG 2.1 AA compliance */}
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
         <meta name="theme-color" content="#0D0F1A" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
