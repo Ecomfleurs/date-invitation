@@ -2,11 +2,13 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { TRANSPORTS } from '@/lib/constants'
+import { trackEvent } from '@/lib/analytics'
 
 export default function Screen4Transport({ onSelect }) {
   const [selected, setSelected] = useState(null)
 
   const handleSelect = (t) => {
+    trackEvent('transport_selected', { transport: t.label })
     setSelected(t.id)
     setTimeout(() => onSelect(t.label), 300)
   }

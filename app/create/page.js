@@ -8,6 +8,7 @@ import TransportPicker from '@/components/ui/TransportPicker'
 import PreviewCard from '@/components/ui/PreviewCard'
 import { DEFAULT_MENUS } from '@/lib/constants'
 import { buildInviteUrl } from '@/lib/encode'
+import { trackEvent } from '@/lib/analytics'
 
 export default function CreatePage() {
   const [mode, setMode] = useState('romantic')
@@ -67,18 +68,21 @@ export default function CreatePage() {
     }
     const url = buildInviteUrl(config)
     setGeneratedUrl(url)
+    trackEvent('link_generated', { mode, theme: config.theme || null })
     requestAnimationFrame(() => {
       document.getElementById('result-box')?.scrollIntoView({ behavior: 'auto', block: 'nearest' })
     })
   }
 
   const copyLink = () => {
+    trackEvent('link_copied', { mode })
     navigator.clipboard.writeText(generatedUrl)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
 
   const shareWA = () => {
+    trackEvent('share_whatsapp_clicked', { mode })
     const name = inviteName.trim()
     const msg = mode === 'romantic'
       ? `💌 Hey ${name} ! J'ai préparé quelque chose de spécial pour toi...\n\n👉 ${generatedUrl}`

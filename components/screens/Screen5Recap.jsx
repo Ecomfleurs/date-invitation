@@ -1,12 +1,14 @@
 'use client'
 import { motion } from 'framer-motion'
 import { buildWAMessage } from '@/lib/encode'
+import { trackEvent } from '@/lib/analytics'
 
 export default function Screen5Recap({ config, answers }) {
   const { menu, creneau, transport } = answers
   const isRomantic = config.mode === 'romantic'
 
   const sendWhatsApp = () => {
+    trackEvent('whatsapp_sent', { mode: config.mode })
     const msg = buildWAMessage({
       config,
       menu,

@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { formatCreneau } from '@/lib/encode'
+import { trackEvent } from '@/lib/analytics'
 
 export default function Screen3Creneau({ config, onSelect }) {
   const [selected, setSelected] = useState(null)
@@ -12,8 +13,10 @@ export default function Screen3Creneau({ config, onSelect }) {
 
   const handleContinue = () => {
     if (suggestion.trim()) {
+      trackEvent('creneau_selected', { type: 'suggestion' })
       onSelect({ label: '💬 ' + suggestion.trim(), isSuggestion: true, value: suggestion.trim() })
     } else {
+      trackEvent('creneau_selected', { type: 'preset', index: selected })
       onSelect({ label: formatCreneau(config.creneaux[selected]), isSuggestion: false, value: config.creneaux[selected] })
     }
   }

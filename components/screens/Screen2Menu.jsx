@@ -2,8 +2,13 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { MENU_EMOJIS } from '@/lib/constants'
+import { trackEvent } from '@/lib/analytics'
 
 export default function Screen2Menu({ config, onSelect }) {
+  const handleSelect = (label) => {
+    trackEvent('menu_selected', { menu: label })
+    onSelect(label)
+  }
   return (
     <motion.div
       className="fixed inset-0 flex flex-col items-center justify-center px-5 bg-bg overflow-hidden"
@@ -21,7 +26,7 @@ export default function Screen2Menu({ config, onSelect }) {
         {config.menus.map((menu, i) => (
           <motion.div
             key={menu.label}
-            onClick={() => setTimeout(() => onSelect(menu.label), 300)}
+            onClick={() => setTimeout(() => handleSelect(menu.label), 300)}
             whileTap={{ scale: 0.95 }}
             className="relative bg-card border-2 border-border rounded-2xl overflow-hidden cursor-pointer active:border-primary"
           >

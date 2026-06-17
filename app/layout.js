@@ -2,6 +2,9 @@ import './globals.css'
 import JsonLd from '@/components/JsonLd'
 import ServiceWorker from '@/components/ServiceWorker'
 import { Playfair_Display, Inter } from 'next/font/google'
+import { GoogleAnalytics } from '@next/third-parties/google'
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -89,6 +92,7 @@ export default function RootLayout({ children }) {
         {children}
         <ServiceWorker />
       </body>
+      {GA_ID && <GoogleAnalytics gaId={GA_ID} />}
     </html>
   )
 }

@@ -1,6 +1,7 @@
 'use client'
 import { useState, useCallback, useRef } from 'react'
 import { motion } from 'framer-motion'
+import { trackEvent } from '@/lib/analytics'
 
 const NO_TEXTS = [
   'Non 😢',
@@ -38,8 +39,14 @@ export default function Screen1Accroche({ config, onYes }) {
   }, [])
 
   const handleNoClick = () => {
+    trackEvent('non_button_click', { flee_count: fleeCount })
     setNoClicked(true)
     setTimeout(() => setNoClicked(false), 2000)
+  }
+
+  const handleYesClick = () => {
+    trackEvent('invite_accepted', { mode: config.mode })
+    onYes()
   }
 
   const noLabel = noClicked
@@ -91,7 +98,7 @@ export default function Screen1Accroche({ config, onYes }) {
         transition={{ delay: 0.6 }}
       >
         <button
-          onClick={onYes}
+          onClick={handleYesClick}
           className="w-full py-5 rounded-2xl bg-primary text-bg font-display text-lg font-bold shadow-primary active:scale-95 transition-transform"
         >
           OUI ! 😍
