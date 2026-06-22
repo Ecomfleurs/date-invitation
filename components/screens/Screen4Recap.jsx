@@ -3,8 +3,8 @@ import { motion } from 'framer-motion'
 import { buildWAMessage } from '@/lib/encode'
 import { trackEvent } from '@/lib/analytics'
 
-export default function Screen5Recap({ config, answers }) {
-  const { menu, creneau, transport } = answers
+export default function Screen4Recap({ config, answers }) {
+  const { menu, creneau } = answers
   const isRomantic = config.mode === 'romantic'
 
   const sendWhatsApp = () => {
@@ -13,7 +13,6 @@ export default function Screen5Recap({ config, answers }) {
       config,
       menu,
       creneauLabel: creneau.label,
-      transport,
       suggestion: creneau.isSuggestion ? creneau.value : '',
     })
     const phone = config.phone.replace(/\D/g, '')
@@ -43,7 +42,6 @@ export default function Screen5Recap({ config, answers }) {
         <TicketRow icon="🍽️" value={menu} />
         <hr className="border-dashed border-border my-3.5" />
         <TicketRow icon="📅" value={creneau.label} />
-        <TicketRow icon="🚗" value={transport} />
       </motion.div>
 
       <motion.div

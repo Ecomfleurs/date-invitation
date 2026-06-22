@@ -36,11 +36,11 @@ app/
   create/page.js       → Page organisateur
   invite/
     page.js            → Wrapper Suspense
-    InviteClient.js    → Flow invité (5 écrans)
+    InviteClient.js    → Flow invité (4 écrans)
 components/
-  ui/                  → ModeToggle, MenuGrid, CreneauxPicker, TransportPicker, PreviewCard
-  screens/             → Screen1 à Screen5
+  ui/                  → ModeToggle, MenuGrid, CreneauxPicker, PreviewCard
+  screens/             → Screen1 à Screen4
 lib/
   encode.js            → Encode/decode config en base64 URL
-  constants.js         → Menus et transports par défaut
+  constants.js         → Menus par défaut
 ```

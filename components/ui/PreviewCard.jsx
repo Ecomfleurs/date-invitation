@@ -1,6 +1,6 @@
 'use client'
 
-export default function PreviewCard({ name, menus, creneaux, transport }) {
+export default function PreviewCard({ name, menus, creneaux }) {
   return (
     <div className="bg-card border-2 border-primary rounded-2xl p-5 glow-border theme-transition mb-5">
       <p className="font-display text-[15px] text-primary mb-3.5 theme-transition">✨ Aperçu de l'invitation</p>
@@ -22,7 +22,6 @@ export default function PreviewCard({ name, menus, creneaux, transport }) {
         }
         empty="Aucun créneau ajouté"
       />
-      <Row icon="🚗" value={transport || '—'} />
     </div>
   )
 }

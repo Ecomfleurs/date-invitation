@@ -7,15 +7,14 @@ import Screen1Accroche from '@/components/screens/Screen1Accroche'
 
 const Screen2Menu = dynamic(() => import('@/components/screens/Screen2Menu'))
 const Screen3Creneau = dynamic(() => import('@/components/screens/Screen3Creneau'))
-const Screen4Transport = dynamic(() => import('@/components/screens/Screen4Transport'))
-const Screen5Recap = dynamic(() => import('@/components/screens/Screen5Recap'))
+const Screen4Recap = dynamic(() => import('@/components/screens/Screen4Recap'))
 
 export default function InvitePage() {
   const searchParams = useSearchParams()
   const [config, setConfig] = useState(null)
   const [error, setError] = useState(false)
   const [screen, setScreen] = useState(1)
-  const [answers, setAnswers] = useState({ menu: '', creneau: null, transport: '' })
+  const [answers, setAnswers] = useState({ menu: '', creneau: null })
 
   useEffect(() => {
     const cfg = searchParams.get('config')
@@ -78,15 +77,7 @@ export default function InvitePage() {
         />
       )}
       {screen === 4 && (
-        <Screen4Transport
-          onSelect={(transport) => {
-            setAnswers(prev => ({ ...prev, transport }))
-            setScreen(5)
-          }}
-        />
-      )}
-      {screen === 5 && (
-        <Screen5Recap config={config} answers={answers} />
+        <Screen4Recap config={config} answers={answers} />
       )}
     </div>
   )

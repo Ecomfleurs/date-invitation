@@ -4,7 +4,6 @@ import ModeToggle from '@/components/ui/ModeToggle'
 import ThemePicker from '@/components/ui/ThemePicker'
 import MenuGrid from '@/components/ui/MenuGrid'
 import CreneauxPicker from '@/components/ui/CreneauxPicker'
-import TransportPicker from '@/components/ui/TransportPicker'
 import PreviewCard from '@/components/ui/PreviewCard'
 import { DEFAULT_MENUS } from '@/lib/constants'
 import { buildInviteUrl } from '@/lib/encode'
@@ -18,7 +17,6 @@ export default function CreatePage() {
     DEFAULT_MENUS.map(m => ({ id: m.id, label: m.label, emoji: m.emoji, image: null, selected: true }))
   )
   const [creneaux, setCreneaux] = useState([{ id: 1, date: '', time: '' }])
-  const [transport, setTransport] = useState('Zemjan\nKekeno')
   const [theme, setTheme] = useState('valentine')
   const [generatedUrl, setGeneratedUrl] = useState(null)
   const [copied, setCopied] = useState(false)
@@ -63,7 +61,6 @@ export default function CreatePage() {
       phone: '229' + orgPhone.trim().replace(/\s/g, ''),
       menus: selectedMenuItems.map(m => ({ label: m.label, image: m.image })),
       creneaux: filledCreneaux.map(c => ({ date: c.date, time: c.time })),
-      transport,
       theme: mode === 'romantic' ? theme : undefined,
     }
     const url = buildInviteUrl(config)
@@ -158,16 +155,11 @@ export default function CreatePage() {
         />
       </Section>
 
-      <Section label="Transport suggéré">
-        <TransportPicker selected={transport} onSelect={setTransport} />
-      </Section>
-
       <div className="px-5 pt-7">
         <PreviewCard
           name={inviteName}
           menus={selectedMenuItems.map(m => m.label)}
           creneaux={creneaux}
-          transport={transport}
         />
         <button
           onClick={generate}
