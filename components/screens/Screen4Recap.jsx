@@ -1,11 +1,14 @@
 'use client'
-import { motion } from 'framer-motion'
-import { buildWAMessage } from '@/lib/encode'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { buildWAMessage, buildShareMessage } from '@/lib/encode'
 import { trackEvent } from '@/lib/analytics'
 
 export default function Screen4Recap({ config, answers }) {
   const { menu, creneau } = answers
   const isRomantic = config.mode === 'romantic'
+  const [copied, setCopied] = useState(false)
+  const [shareMsg, setShareMsg] = useState(null)
 
   const sendWhatsApp = () => {
     trackEvent('whatsapp_sent', { mode: config.mode })
@@ -17,6 +20,32 @@ export default function Screen4Recap({ config, answers }) {
     })
     const phone = config.phone.replace(/\D/g, '')
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank')
+  }
+
+  const shareOther = async () => {
+    trackEvent('share_other_clicked', { mode: config.mode })
+    const msg = buildShareMessage({
+      config,
+      menu,
+      creneauLabel: creneau.label,
+      suggestion: creneau.isSuggestion ? creneau.value : '',
+    })
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share({ text: msg })
+        trackEvent('share_other_sent', { mode: config.mode })
+      } catch {}
+      return
+    }
+    try {
+      await navigator.clipboard.writeText(msg)
+      trackEvent('share_other_copied', { mode: config.mode })
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2500)
+    } catch {
+      trackEvent('share_other_fallback_shown', { mode: config.mode })
+      setShareMsg(msg)
+    }
   }
 
   return (
@@ -56,6 +85,48 @@ export default function Screen4Recap({ config, answers }) {
         >
           Envoyer mes choix par WhatsApp 💌
         </button>
+
+        <button
+          onClick={shareOther}
+          className="w-full mt-3 py-4 rounded-2xl bg-inputbg border-2 border-border text-[#F8F4EE] font-display text-[15px] font-semibold active:scale-95 transition-transform"
+        >
+          Partager autrement 📤
+        </button>
+
+        <AnimatePresence>
+          {copied && (
+            <motion.p
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="text-center text-[12px] text-muted mt-2.5"
+            >
+              ✅ Message copié ! Colle-le dans Messenger, SMS...
+            </motion.p>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {shareMsg && (
+            <motion.div
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="mt-3"
+            >
+              <p className="text-center text-[12px] text-muted mb-1.5">
+                Sélectionne et copie ton message :
+              </p>
+              <textarea
+                readOnly
+                value={shareMsg}
+                onFocus={e => e.target.select()}
+                rows={4}
+                className="w-full p-3 rounded-xl bg-inputbg border-2 border-border text-[#F8F4EE] text-[13px]"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     </motion.div>
   )
